@@ -6,11 +6,11 @@ use std::io::Write;
 use rand::Rng;
 
 const GENOME_CHARACTERS: &str = " !\"#$%&'()*+,-./0123456789:;<=>?@\
-                                ABCDEFGHIJKLMNOPQRSTUVWXYZ\
-                                [\\]^_`\
-                                abcdefghijklmnopqrstuvwxyz\
-                                {|}~";
-
+                                 ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+                                 [\\]^_`\
+                                 abcdefghijklmnopqrstuvwxyz\
+                                 {|}~";
+ 
 
 #[derive(Debug)]
 struct Population {
@@ -38,11 +38,10 @@ impl Population {
 
     fn random_genome(genome_size: usize) -> String {
         let mut genome = String::with_capacity(genome_size);
+        let mut rng = rand::thread_rng();
 
         for _ in 0..genome_size {
-            let c = rand::sample(&mut rand::thread_rng(),
-                                 GENOME_CHARACTERS.chars(),
-                                 1)[0];
+            let c = rand::sample(&mut rng, GENOME_CHARACTERS.chars(), 1)[0];
             genome.push(c);
         }
 
