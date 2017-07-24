@@ -37,15 +37,10 @@ impl Population {
     }
 
     fn random_genome(genome_size: usize) -> String {
-        let mut genome = String::with_capacity(genome_size);
         let mut rng = rand::thread_rng();
 
-        for _ in 0..genome_size {
-            let c = rand::sample(&mut rng, GENOME_CHARACTERS.chars(), 1)[0];
-            genome.push(c);
-        }
-
-        return genome;
+        (0..genome_size).map(|x| rand::sample(&mut rng, GENOME_CHARACTERS.chars(), 1)[0])
+                        .collect()
     }
 
     // `fitness` here is a static method to avoid having to borrow self both mutably and immutably
