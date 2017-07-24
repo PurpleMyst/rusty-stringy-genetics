@@ -39,7 +39,7 @@ impl Population {
     fn random_genome(genome_size: usize) -> String {
         let mut rng = rand::thread_rng();
 
-        (0..genome_size).map(|x| rand::sample(&mut rng, GENOME_CHARACTERS.chars(), 1)[0])
+        (0..genome_size).map(|_| rand::sample(&mut rng, GENOME_CHARACTERS.chars(), 1)[0])
                         .collect()
     }
 
