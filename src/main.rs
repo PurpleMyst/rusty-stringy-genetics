@@ -62,14 +62,13 @@ impl Population {
         let mut rng = rand::thread_rng();
 
         if rng.gen::<f64>() < 0.35 {
-            // TODO: Replace this with mutation of a specific character.
-            return Self::random_genome(self.genome_size);
+            Self::random_genome(self.genome_size)
+        } else {
+            mother.chars()
+                  .zip(father.chars())
+                  .map(|(x, y)| if rng.gen() {x} else {y})
+                  .collect()
         }
-
-        mother.chars()
-              .zip(father.chars())
-              .map(|(x, y)| if rng.gen() {x} else {y})
-              .collect()
     }
 
     pub fn sort_genomes(&mut self) {
@@ -92,10 +91,16 @@ impl Population {
         }
 
         let mut rng = rand::thread_rng();
+        let meteor = rng.gen::<f64>() < 0.10;
+
         while new_genomes.len() < self.population_size {
             let new_genome;
 
-            {
+            if meteor {
+                let mother = rand::sample(&mut rng, &new_genomes, 1)[0];
+                let father = Self::random_genome(self.genome_size);
+                new_genome = self.crossover(&mother, &father);
+            } else {
                 let parents = rand::sample(&mut rng, &new_genomes, 2);
                 new_genome = self.crossover(&parents[0], &parents[1]);
             }
